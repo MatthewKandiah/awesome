@@ -225,39 +225,40 @@ root.buttons(gears.table.join(
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "space",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
-    awful.key({ modkey,           }, "j",
+    awful.key({ modkey,           }, "e",
         function ()
             awful.client.focus.byidx( 1)
         end,
         {description = "focus next by index", group = "focus"}
     ),
-    awful.key({ modkey,           }, "k",
+    awful.key({ modkey,           }, "n",
         function ()
             awful.client.focus.byidx(-1)
         end,
         {description = "focus previous by index", group = "focus"}
     ),
     -- Layout manipulation
-    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
+    awful.key({ modkey, "Shift"   }, "e", function () awful.client.swap.byidx(  1)    end,
               {description = "swap with next client by index", group = "swap"}),
-    awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
+    awful.key({ modkey, "Shift"   }, "n", function () awful.client.swap.byidx( -1)    end,
               {description = "swap with previous client by index", group = "swap"}),
-    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end,
+    awful.key({ modkey, "Control" }, "e", function () awful.screen.focus_relative( 1) end,
               {description = "focus the next screen", group = "focus"}),
-    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end,
+    awful.key({ modkey, "Control" }, "n", function () awful.screen.focus_relative(-1) end,
               {description = "focus the previous screen", group = "focus"}),
     -- Standard program
-    awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
+    awful.key({ modkey, "Control" }, "space", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"})
+    -- todo mod+shift+space to launch browser
 )
 
 clientkeys = gears.table.join(
-    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
+    awful.key({ modkey,         }, ".",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
-    awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
+    awful.key({ modkey,         }, "m", function (c) c:swap(awful.client.getmaster()) end,
               {description = "move to master", group = "client"}),
     awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
               {description = "move to screen", group = "client"})
@@ -279,7 +280,7 @@ for i = 1, 9 do
                   end,
                   {description = "view tag #"..i, group = "tag"}),
         -- Move client to tag.
-        awful.key({ modkey, "Shift" }, "#" .. i + 9,
+        awful.key({ modkey, "Control" }, "#" .. i + 9,
                   function ()
                       if client.focus then
                           local tag = client.focus.screen.tags[i]
