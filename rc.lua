@@ -45,7 +45,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init(gears.filesystem.get_configuration_dir() .. "mytheme.lua")
 
 terminal = "alacritty"
 editor = "nvim"
@@ -157,7 +157,7 @@ local tasklist_buttons = gears.table.join(
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 -- screen.connect_signal("property::geometry", set_wallpaper)
 
-gears.wallpaper.set("#6495ED")
+gears.wallpaper.set("#3465BD")
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     -- set_wallpaper(s)
