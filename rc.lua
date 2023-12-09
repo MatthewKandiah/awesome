@@ -214,6 +214,7 @@ awful.screen.connect_for_each_screen(function(s)
 			mykeyboardlayout,
 			wibox.widget.systray(),
 			mytextclock,
+			require('battery-widget'){},
 			s.mylayoutbox,
 		},
 	}
@@ -265,7 +266,7 @@ globalkeys = gears.table.join(
 	awful.key({ modkey, "Control" }, "space", function() awful.spawn(terminal) end,
 		{ description = "open a terminal", group = "launcher" }),
 	-- Menubar
-	awful.key({ modkey, }, "p", function() menubar.show() end,
+	awful.key({ modkey, }, "l", function() menubar.show() end,
 		{ description = "show the menubar", group = "launcher" }),
 	awful.key({ modkey, "Shift" }, "space", function() awful.spawn("firefox") end,
 		{ description = "open firefox" })
