@@ -268,8 +268,8 @@ globalkeys = gears.table.join(
 	-- Menubar
 	awful.key({ modkey, }, "l", function() menubar.show() end,
 		{ description = "show the menubar", group = "launcher" }),
-	awful.key({ modkey, "Shift" }, "space", function() awful.spawn("firefox") end,
-		{ description = "open firefox" })
+	awful.key({ modkey, "Shift" }, "space", function() awful.spawn("librewolf") end,
+		{ description = "open web browser" })
 )
 
 clientkeys = gears.table.join(
