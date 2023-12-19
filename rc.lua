@@ -51,29 +51,17 @@ end
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_configuration_dir() .. "mytheme.lua")
 
-terminal = "alacritty"
-editor = "nvim"
-editor_cmd = terminal .. " -e " .. editor
-modkey = "Mod4"
+local terminal = "alacritty"
+local browser = "librewolf"
+local editor = "nvim"
+local editor_cmd = terminal .. " -e " .. editor
+local modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
 	awful.layout.suit.tile,
 	awful.layout.suit.tile.bottom,
-	awful.layout.suit.fair,
-	awful.layout.suit.fair.horizontal,
 	awful.layout.suit.max.fullscreen,
-	-- awful.layout.suit.floating,
-	-- awful.layout.suit.tile.left,
-	-- awful.layout.suit.tile.top,
-	-- awful.layout.suit.spiral,
-	-- awful.layout.suit.spiral.dwindle,
-	-- awful.layout.suit.max,
-	-- awful.layout.suit.magnifier,
-	-- awful.layout.suit.corner.nw,
-	-- awful.layout.suit.corner.ne,
-	-- awful.layout.suit.corner.sw,
-	-- awful.layout.suit.corner.se,
 }
 -- }}}
 
@@ -81,15 +69,14 @@ awful.layout.layouts = {
 -- Create a launcher widget and a main menu
 myawesomemenu = {
 	{ "hotkeys",     function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-	{ "manual",      terminal .. " -e man awesome" },
-	{ "edit config", editor_cmd .. " " .. awesome.conffile },
 	{ "restart",     awesome.restart },
 	{ "quit",        function() awesome.quit() end },
 }
 
 mymainmenu = awful.menu({
 	items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-		{ "open terminal", terminal }
+		{ "terminal", terminal },
+		{ "browser", browser },
 	}
 })
 
@@ -214,7 +201,7 @@ awful.screen.connect_for_each_screen(function(s)
 			mykeyboardlayout,
 			wibox.widget.systray(),
 			mytextclock,
-			require('battery-widget'){},
+			require('battery-widget') {},
 			s.mylayoutbox,
 		},
 	}
@@ -262,13 +249,32 @@ globalkeys = gears.table.join(
 		{ description = "focus the next screen", group = "focus" }),
 	awful.key({ modkey, "Control" }, "n", function() awful.screen.focus_relative(-1) end,
 		{ description = "focus the previous screen", group = "focus" }),
+	-- Alternate bindings that work better with qmk homerow modifiers
+	awful.key({ modkey, }, "Right",
+		function()
+			awful.client.focus.byidx(1)
+		end,
+		{ description = "focus next by index", group = "focus" }
+	),
+	awful.key({ modkey, }, "Left",
+		function()
+			awful.client.focus.byidx(-1)
+		end,
+		{ description = "focus previous by index", group = "focus" }
+	),
+	awful.key({ modkey, }, "Down", function() awful.layout.inc(1) end,
+		{ description = "select next", group = "layout" }),
+	awful.key({ modkey, }, "Page_Down", function() awful.client.swap.byidx(1) end,
+		{ description = "swap with next client by index", group = "focus" }),
+	awful.key({ modkey, }, "Page_Up", function() awful.client.swap.byidx(-1) end,
+		{ description = "swap with previous client by index", group = "swap" }),
 	-- Standard program
 	awful.key({ modkey, "Control" }, "space", function() awful.spawn(terminal) end,
 		{ description = "open a terminal", group = "launcher" }),
 	-- Menubar
 	awful.key({ modkey, }, "l", function() menubar.show() end,
 		{ description = "show the menubar", group = "launcher" }),
-	awful.key({ modkey, "Shift" }, "space", function() awful.spawn("librewolf") end,
+	awful.key({ modkey, "Shift" }, "space", function() awful.spawn(browser) end,
 		{ description = "open web browser" })
 )
 
@@ -276,6 +282,9 @@ clientkeys = gears.table.join(
 	awful.key({ modkey, }, ".", function(c) c:kill() end,
 		{ description = "close", group = "client" }),
 	awful.key({ modkey, }, "m", function(c) c:swap(awful.client.getmaster()) end,
+		{ description = "move to master", group = "client" }),
+	-- alternate binding that works better with qmk homerow modifiers
+	awful.key({ modkey, }, "Up", function(c) c:swap(awful.client.getmaster()) end,
 		{ description = "move to master", group = "client" }),
 	awful.key({ modkey, }, "o", function(c) c:move_to_screen() end,
 		{ description = "move to screen", group = "client" })
