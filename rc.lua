@@ -53,8 +53,7 @@ beautiful.init(gears.filesystem.get_configuration_dir() .. "mytheme.lua")
 
 local terminal = "alacritty"
 local browser = "librewolf"
-local editor = "nvim"
-local editor_cmd = terminal .. " -e " .. editor
+local file_manager = "thunar"
 local modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -77,6 +76,7 @@ mymainmenu = awful.menu({
 	items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
 		{ "terminal", terminal },
 		{ "browser", browser },
+		{ "file manager", file_manager },
 	}
 })
 
