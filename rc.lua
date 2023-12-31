@@ -201,7 +201,8 @@ awful.screen.connect_for_each_screen(function(s)
 			mykeyboardlayout,
 			wibox.widget.systray(),
 			mytextclock,
-			require('battery-widget') {},
+			-- laptop has two batteries, second is faulty so ignore it
+			require('battery-widget') {adapter = "BAT0"},
 			s.mylayoutbox,
 		},
 	}
